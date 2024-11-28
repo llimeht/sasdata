@@ -4,10 +4,3 @@ lxml
 
 # Calculation
 numpy==1.*
-
-# Unit testing
-pytest
-unittest-xml-reporting
-
-# Documentation
-sphinx
