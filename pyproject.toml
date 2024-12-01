@@ -1,9 +1,8 @@
 [build-system]
 requires = [
     "hatchling",
-    "hatch-build-scripts",
     "hatch-requirements-txt",
-    "sphinx",
+    "hatch-sphinx",
 ]
 build-backend = "hatchling.build"
 
@@ -75,17 +74,19 @@ exclude = [
 "docs/source" = "sasdata/docs-source"
 "build/docs" = "sasdata/docs"
 
-[[tool.hatch.build.hooks.build-scripts.scripts]]
-# Build documentation with sphinx
-commands = [
-    "sphinx-apidoc -o source/dev/generated -d 8 -H SasData ../sasdata",
-    "PYTHONPATH=../$PWD sphinx-build -b html source docs",
-]
-work_dir = "docs"
-out_dir = "build/"
-artifacts = [
-    "docs/**",
-]
+[[tool.hatch.build.targets.wheel.hooks.sphinx.tools]]
+tool = "apidoc"
+source = "../sasdata"
+out_dir = "source/dev/generated"
+depth = 8
+private = false
+header = "SasData"
+
+[[tool.hatch.build.targets.wheel.hooks.sphinx.tools]]
+tool = "build"
+format = "html"
+source = "source"
+out_dir = "build"
 
 [tool.pytest.ini_options]
 minversion = "6.0"
